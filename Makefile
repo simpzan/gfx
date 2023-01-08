@@ -10,3 +10,6 @@ vktest: 26_texture_mapping.cpp
 	/Users/simpzan/VulkanSDK/1.3.236.0/macOS/bin/glslc 26_shader_textures.vert -o vert.spv
 	/Users/simpzan/VulkanSDK/1.3.236.0/macOS/bin/glslc 26_shader_textures.frag -o frag.spv
 	./vktest
+
+clean:
+	rm -rf *.spv vktest *.o
