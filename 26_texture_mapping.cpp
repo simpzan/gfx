@@ -389,8 +389,7 @@ private:
         createGraphicsPipeline();
 
         createCommandPool();
-        createTextureImage();
-        createTextureImageView();
+        createTextureImageAndImageView();
         createTextureSampler();
         createVertexBuffer();
         createIndexBuffer();
@@ -881,7 +880,7 @@ private:
         }
     }
 
-    void createTextureImage() {
+    void createTextureImageAndImageView() {
         auto image = StbImage::load("texture.jpg");
         if (!image) {
             throw std::runtime_error("failed to load texture image!");
@@ -907,9 +906,7 @@ private:
 
         vkDestroyBuffer(device, stagingBuffer, nullptr);
         vkFreeMemory(device, stagingBufferMemory, nullptr);
-    }
 
-    void createTextureImageView() {
         textureImageView = createImageView(device, textureImage, VK_FORMAT_R8G8B8A8_SRGB);
     }
 
