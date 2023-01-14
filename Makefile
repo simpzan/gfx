@@ -1,7 +1,7 @@
 
 .PHONY: vktest
 vktest: 26_texture_mapping.cpp
-	g++ utils.cpp -c -o utils.o
+	g++ utils.cpp -c -o utils.o -I `pwd` -std=c++17
 	g++ 26_texture_mapping.cpp -c -o main.o \
 		-std=c++17 \
 		-I ${HOME}/VulkanSDK/1.3.236.0/macOS/include/ \
