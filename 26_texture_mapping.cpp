@@ -384,28 +384,30 @@ private:
         pickPhysicalDevice();
         createLogicalDevice();
 
+        createSyncObjects();
+        createCommandPool();
+        createCommandBuffers();
+
+        /// @brief config output buffers
         createSwapChain();
         createImageViews();
         createRenderPass();
         createFramebuffers();
 
+
         createDescriptorSetLayout();
-        createPipelineLayout();
         createGraphicsPipeline();
 
-        createCommandPool();
-        createTextureImageAndImageView();
-        createTextureSampler();
-
+        /// @brief configg input buffers
         createVertexBuffer();
         createIndexBuffer();
+
+        createTextureImageAndImageView();
+        createTextureSampler();
         createUniformBuffers();
 
         createDescriptorPool();
         createDescriptorSets();
-
-        createCommandBuffers();
-        createSyncObjects();
     }
 
     void mainLoop() {
@@ -740,7 +742,7 @@ private:
             throw std::runtime_error("failed to create descriptor set layout!");
         }
     }
-    void createPipelineLayout() {
+    VkPipelineLayout createPipelineLayout() {
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
         pipelineLayoutInfo.setLayoutCount = 1;
@@ -749,6 +751,7 @@ private:
         if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS) {
             throw std::runtime_error("failed to create pipeline layout!");
         }
+        return pipelineLayout;
     }
     std::vector<VkPipelineShaderStageCreateInfo> createShaderStages(const char *vert, const char *frag) {
         VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
@@ -841,7 +844,7 @@ private:
         pipelineInfo.pMultisampleState = &multisampling;
         pipelineInfo.pColorBlendState = &colorBlending;
         pipelineInfo.pDynamicState = &dynamicState;
-        pipelineInfo.layout = pipelineLayout;
+        pipelineInfo.layout = createPipelineLayout();
         pipelineInfo.renderPass = renderPass;
         pipelineInfo.subpass = 0;
         pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
